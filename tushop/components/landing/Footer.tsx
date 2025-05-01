@@ -18,8 +18,8 @@ function Footer() {
     </span>
   </Link>
             <p className="mt-3 max-w-[360px] text-justify text-sm text-desc">
-              Tushop's Warehouse Management System provides real-time inventory control 
-              and streamlined logistics operations for businesses across Kenya.
+            Tushop{"'"}s Warehouse Management System provides real-time inventory control 
+            and streamlined logistics operations for businesses across Kenya.
             </p>
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-2 text-sm text-desc">

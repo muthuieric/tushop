@@ -21,7 +21,7 @@ function About() {
           <div className="space-y-2 md:space-y-3">
             <h3 className="landing-section-title">About Our WMS Solution</h3>
             <p className="landing-section-description text-center lg:text-justify">
-              Our Warehouse Management System revolutionizes Tushop Logistics' operations by replacing manual processes with automated inventory tracking, real-time updates, and streamlined order fulfillment - reducing errors and improving efficiency.
+              Our Warehouse Management System revolutionizes Tushop Logistics operations by replacing manual processes with automated inventory tracking, real-time updates, and streamlined order fulfillment - reducing errors and improving efficiency.
             </p>
           </div>
 
