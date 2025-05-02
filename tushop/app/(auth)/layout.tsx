@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
-    template: "StockifyHub | %s",
-    default: "StockifyHub",
+    template: "Tushop | %s",
+    default: "Tushop",
   },
 };
 

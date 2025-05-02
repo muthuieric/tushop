@@ -4,7 +4,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "StockifyHub",
+  title: "Tushop",
 };
 
 export default function LandingLayout({
