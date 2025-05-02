@@ -9,8 +9,8 @@ import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: {
-    template: "Stockify - %s",
-    default: "Stockify",
+    template: "Tushop- %s",
+    default: "Tushop",
   },
 };
 
