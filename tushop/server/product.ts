@@ -6,7 +6,7 @@ import {
   ProductsInUserInventoriesType,
   ProductsValueType,
   ProductWithCategory,
-} from "@/types/server/products";
+} from "@/types/server/product";
 import { Product } from "@prisma/client";
 import { getUserInventoryIds } from "./inventory";
 
