@@ -1,5 +1,4 @@
 import About from "@/components/landing/About";
-import Banner from "@/components/landing/Banner";
 import FAQ from "@/components/landing/FAQ";
 import Features from "@/components/landing/Features";
 import Hero from "@/components/landing/Hero";
@@ -20,7 +19,6 @@ export default async function Home() {
       <About />
       <Features />
       <FAQ />
-      {/* <Banner /> */}
     </>
   );
 }
