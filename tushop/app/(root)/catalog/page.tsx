@@ -17,10 +17,8 @@ import { redirect } from "next/navigation";
 import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
 import { DataTable } from "@/components/ui/data-table";
 import {
-  getRecentTransactions,
-  getTotalTransactionsByStatus,
   getTransactionTableData,
-} from "@/server/transaction";
+} from "@/server/uniquetransaction";
 
 export const metadata: Metadata = {
   title: "Products",
