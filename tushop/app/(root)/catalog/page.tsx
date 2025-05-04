@@ -14,6 +14,13 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
+import { DataTable } from "@/components/ui/data-table";
+import {
+  getRecentTransactions,
+  getTotalTransactionsByStatus,
+  getTransactionTableData,
+} from "@/server/transaction";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -39,6 +46,14 @@ async function ProductsPage() {
     getInventoriesProductsValue(userId),
   ]);
 
+
+  const [transactionsTableData] =
+    await Promise.all([
+      getTransactionTableData(userId),
+    ]);
+
+
+
   return (
     <section className="space-y-6">
       <div className="">
@@ -55,6 +70,18 @@ async function ProductsPage() {
           </div>
         </div>
 
+        <div className="bg-main-card space-y-4 rounded-md p-6">
+            <div>
+              <h4 className="section-header">Transactions</h4>
+            </div>
+            <div>
+              <DataTable
+                columns={columns}
+                data={transactionsTableData}
+                className="border-none"
+              />
+          </div>
+      </div>
       
     
      
