@@ -18,6 +18,20 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export const sidebarLinks = [
   {
+    title: "Inventory",
+    path: "/inventory",
+    icon: <Package size={20} />,
+  },
+  {
+    title: "Catalog",
+    path: "/catalog",
+    icon: <SquareStack size={20} />,
+  },
+
+];
+
+export const adminSidebarLinks = [
+  {
     title: "Dashboard",
     path: "/dashboard",
     icon: <LayoutDashboardIcon size={20} />,
@@ -43,6 +57,7 @@ export const sidebarLinks = [
     icon: <Receipt size={20} />,
   },
 ];
+
 
 export const landingPageNavbarLinks = [
   {

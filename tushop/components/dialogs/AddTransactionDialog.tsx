@@ -148,7 +148,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
           className="flex items-center gap-2 bg-main-700 text-xs text-white duration-200 hover:bg-main-500 xl:text-sm"
         >
           <ArrowLeftRight size={16} />
-          Add Transaction
+          Buy Products
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">

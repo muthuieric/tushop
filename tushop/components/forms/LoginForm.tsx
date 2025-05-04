@@ -66,7 +66,7 @@ function LoginForm() {
       } else {
         setSubmitting(false);
         router.refresh();
-        router.replace("/dashboard");
+        router.replace("/catalog");
       }
     } catch (error: any) {
       setSubmitting(false);
