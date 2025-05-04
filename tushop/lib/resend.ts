@@ -16,7 +16,7 @@ export const sendEmail = async ({
   try {
     const { data, error } = await resend.emails.send({
       to,
-      from: "tryonboarding@resend.dev", // Must be verified in Resend
+      from: "tushoponboarding@resend.dev", // Must be verified in Resend
       subject,
       html,
     });
