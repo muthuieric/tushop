@@ -286,7 +286,7 @@ export async function getRecentTransactions(
           Inventory: {
             users: {
               some: {
-                userId: userId,
+                userId,
               },
             },
           },
@@ -310,6 +310,11 @@ export async function getRecentTransactions(
             },
           },
         },
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: "desc",
@@ -317,18 +322,19 @@ export async function getRecentTransactions(
       take: 5,
     });
 
-    const results = transactions.map((transaction) => ({
+    const results: RecentTransactionsType[] = transactions.map((transaction) => ({
       id: transaction.id,
+      userId: transaction.user.id,
       status: transaction.status,
       date: transaction.date,
       totalPrice: transaction.totalPrice,
       productName: transaction.product.name,
-      categoryName: transaction.product.Category?.name ?? "Uncategorized",
+      categoryName: transaction.product.Category.name,
     }));
 
     return results;
   } catch (error: any) {
-    throw new Error(error.message || "An error occurred");
+    throw new Error(`Failed to fetch recent transactions for user ${userId}: ${error.message}`);
   }
 }
 
