@@ -83,7 +83,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
       productId: "",
       quantity: 0,
       date: undefined,
-      status: undefined,
+      status: "PENDING",
     },
   });
 
@@ -101,6 +101,8 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
           quantity: values.quantity,
           status: values.status,
           date: values.date,
+          userId: userId,
+
         }),
       });
 
@@ -151,7 +153,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
       </DialogTrigger>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new Transaction</DialogTitle>
+          <DialogTitle>Buy Products</DialogTitle>
           <DialogDescription>
             Please fill in the following details to add a transaction.
           </DialogDescription>
@@ -252,7 +254,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
@@ -283,7 +285,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
                   </FormControl>
                 </FormItem>
               )}
-            />
+            /> */}
 
             <DialogFooter>
               <SubmitButton

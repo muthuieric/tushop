@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -17,7 +17,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  inventories InventoryMember[]
+  inventories  InventoryMember[]
+  transactions Transaction[]
 }
 
 model Inventory {
@@ -54,6 +55,7 @@ model Product {
 model Transaction {
   id         String   @id @default(uuid())
   productId  String
+  userId     String
   quantity   Int
   totalPrice Float
   status     Status
@@ -62,6 +64,7 @@ model Transaction {
   updatedAt  DateTime @updatedAt
 
   product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Restrict)
 }
 
 model Category {

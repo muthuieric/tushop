@@ -11,6 +11,8 @@ export type TransactionsTableType = {
   id: string;
   date: Date;
   status: Status;
+  fullname: string; 
+  email: string; 
   product: string;
   productId: string;
   quantity: number;

@@ -3,7 +3,7 @@ import { transactionSchema } from "@/types/validations";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { productId, quantity, status, date } = await req.json();
+  const { productId, quantity, status, date, userId } = await req.json();
 
   try {
     const product = await prisma.product.findUnique({
@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
       quantity,
       date,
       status,
+      userId,
     });
 
     if (!response.success) {
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
         totalPrice: totalPrice,
         status: status,
         date: new Date(date),
+        userId: userId,
       },
     });
 
@@ -83,7 +85,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const { transactionId, productId, quantity, status, date } = await req.json();
+  const { transactionId, productId, quantity, status, date,  userId, } = await req.json();
 
   try {
     const transaction = await prisma.transaction.findUnique({
@@ -124,6 +126,7 @@ export async function PUT(req: NextRequest) {
       quantity,
       date,
       status,
+      userId,
     });
 
     if (!response.success) {

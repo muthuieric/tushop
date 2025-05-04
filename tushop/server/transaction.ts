@@ -67,39 +67,56 @@ export async function getTransactionTableData(
             inventoryId: true,
           },
         },
+        user: {
+          select: {
+            id: true,
+            fullname: true,
+            email: true,
+          },
+        },
       },
       orderBy: {
         date: "asc",
       },
     });
 
-    const results = await Promise.all(
-      transactions.map(async (transaction) => {
-        const userAccess = await prisma.inventoryMember.findFirst({
-          where: {
-            userId: userId,
-            inventoryId: transaction.product.inventoryId,
-          },
-        });
+    // Fetch all inventory memberships for the user in one query to avoid N+1 queries
+    const inventoryMembers = await prisma.inventoryMember.findMany({
+      where: {
+        userId,
+        inventoryId: {
+          in: transactions.map((t) => t.product.inventoryId),
+        },
+      },
+      select: {
+        inventoryId: true,
+        role: true,
+      },
+    });
 
-        return {
-          id: transaction.id,
-          date: transaction.date,
-          status: transaction.status,
-          product: transaction.product.name,
-          productId: transaction.productId,
-          quantity: transaction.quantity,
-          inventoryId: transaction.product.inventoryId,
-          total: transaction.totalPrice,
-          userId: userAccess?.userId as string,
-          currentUserRole: userAccess?.role ?? "USER",
-        };
-      }),
+    // Create a map for quick lookup of user roles
+    const inventoryMemberMap = new Map(
+      inventoryMembers.map((member) => [member.inventoryId, member.role]),
     );
+
+    const results = transactions.map((transaction) => ({
+      id: transaction.id,
+      date: transaction.date,
+      status: transaction.status,
+      fullname: transaction.user.fullname ?? "Unknown",
+      email: transaction.user.email ?? "N/A",
+      product: transaction.product.name,
+      productId: transaction.productId,
+      quantity: transaction.quantity,
+      inventoryId: transaction.product.inventoryId,
+      total: transaction.totalPrice,
+      userId: transaction.user.id,
+      currentUserRole: inventoryMemberMap.get(transaction.product.inventoryId) ?? "USER",
+    }));
 
     return results;
   } catch (error: any) {
-    throw new Error(error.message || "An error occurred");
+    throw new Error(`Failed to fetch transaction table data for user ${userId}: ${error.message}`);
   }
 }
 
@@ -108,24 +125,33 @@ export async function getTransactionTableByInventories(
   inventoryId: string,
 ): Promise<TransactionsTableType[]> {
   try {
-    const userHasAccess = await prisma.inventoryMember.findFirst({
+    // Fetch the user's role for the inventory
+    const userAccess = await prisma.inventoryMember.findFirst({
       where: {
-        userId: userId,
-        inventoryId: inventoryId,
+        userId,
+        inventoryId,
       },
-      include: {
-        user: {
-          select: {
-            email: true,
-          },
-        },
+      select: {
+        role: true,
       },
     });
+
+    // If the user has no access, return an empty array
+    if (!userAccess) {
+      return [];
+    }
 
     const transactions = await prisma.transaction.findMany({
       where: {
         product: {
-          inventoryId: inventoryId,
+          inventoryId,
+          Inventory: {
+            users: {
+              some: {
+                userId,
+              },
+            },
+          },
         },
       },
       include: {
@@ -134,6 +160,13 @@ export async function getTransactionTableByInventories(
             id: true,
             name: true,
             inventoryId: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            fullname: true,
+            email: true,
           },
         },
       },
@@ -146,18 +179,22 @@ export async function getTransactionTableByInventories(
       id: transaction.id,
       date: transaction.date,
       status: transaction.status,
+      fullname: transaction.user.fullname ?? "Unknown",
+      email: transaction.user.email ?? "N/A",
       product: transaction.product.name,
       productId: transaction.productId,
       quantity: transaction.quantity,
       total: transaction.totalPrice,
       inventoryId: transaction.product.inventoryId,
-      userId: userHasAccess?.userId as string,
-      currentUserRole: userHasAccess?.role ?? "USER",
+      userId: transaction.user.id,
+      currentUserRole: userAccess.role ?? "USER",
     }));
 
     return results;
   } catch (error: any) {
-    throw new Error(error.message || "An error occurred");
+    throw new Error(
+      `Failed to fetch transactions for inventory ${inventoryId} and user ${userId}: ${error.message}`,
+    );
   }
 }
 
@@ -184,20 +221,11 @@ export async function getTransactionsByTimeSpan(
       case "week":
         startDate = new Date(currentDate);
         startDate.setDate(currentDate.getDate() - 6);
-
         endDate = currentDate;
         break;
       case "month":
-        startDate = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          1,
-        );
-        endDate = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth() + 1,
-          0,
-        );
+        startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
         break;
       case "all":
         startDate = new Date(0);
@@ -234,7 +262,7 @@ export async function getTransactionsByTimeSpan(
     });
 
     const totalSums = transactions.map((transaction) => ({
-      date: transaction.date, // Get only the date part
+      date: transaction.date,
       total: transaction._sum.totalPrice || 0,
     }));
 
@@ -295,7 +323,7 @@ export async function getRecentTransactions(
       date: transaction.date,
       totalPrice: transaction.totalPrice,
       productName: transaction.product.name,
-      categoryName: transaction.product.Category.name,
+      categoryName: transaction.product.Category?.name ?? "Uncategorized",
     }));
 
     return results;
@@ -337,7 +365,7 @@ export async function getTransactionByStatusChartData(
       );
       return {
         status: status,
-        total: transaction ? transaction._count.id : 0, // default to 0 if no transaction
+        total: transaction ? transaction._count.id : 0,
       };
     });
 

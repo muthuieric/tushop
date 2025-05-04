@@ -66,13 +66,13 @@ async function DashboardPage() {
         <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-9">
           <div className="section-header flex items-center justify-between">
             <h4>Transactions</h4>
-            <Link
+            {/* <Link
               href={"/transactions"}
               className="flex items-center text-sm text-main-500 duration-200 hover:text-main-300 hover:underline"
             >
               Add Transaction
               <ChevronRight size={16} />
-            </Link>
+            </Link> */}
           </div>
           <div>
             <DataTable

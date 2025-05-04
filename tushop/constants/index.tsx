@@ -33,6 +33,11 @@ export const sidebarLinks = [
     icon: <PackageSearch size={20} />,
   },
   {
+    title: "Catalog",
+    path: "/catalog",
+    icon: <SquareStack size={20} />,
+  },
+  {
     title: "Transactions",
     path: "/transactions",
     icon: <Receipt size={20} />,

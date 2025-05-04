@@ -19,6 +19,19 @@ export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [
     },
   },
   {
+    accessorKey: "fullname",
+    enableColumnFilter: true,
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Name" />;
+    },
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return <DataTableColumnHeader column={column} title="Email" />;
+    },
+  },
+  {
     accessorKey: "date",
     header: ({ column }) => {
       return <DataTableColumnHeader column={column} title="Date" />;
@@ -58,9 +71,7 @@ export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [
     id: "actions",
     cell: ({ row }) => {
       const data = row.original;
-
       const hideColumnAction = data.currentUserRole === "USER";
-
       return (
         <>
           {hideColumnAction ? null : (
