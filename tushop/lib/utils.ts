@@ -21,11 +21,12 @@ export function formatDate(date: Date) {
 }
 
 export const currencyFormatterIDR = (amount: number) => {
-  const formatter = Intl.NumberFormat("id-ID", {
-    currency: "Ksh",
+  const formatter = Intl.NumberFormat("en-KE", {
+    currency: "KES",
     style: "currency",
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2, // Include decimals
   }).format(amount);
 
-  return formatter;
+  // Replace dot with comma for decimal separator
+  return formatter.replace(/\./g, ".");
 };
