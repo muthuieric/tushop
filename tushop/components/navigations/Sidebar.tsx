@@ -12,8 +12,8 @@ function Sidebar() {
   const pagename = "/" + pathname.split("/")[1];
   const { data: session } = useSession();
 
-  const isAdmin = session?.user?.email === "lindachepcumba8@gmail.com";
-
+  // const isAdmin = session?.user?.email === "lindachepcumba8@gmail.com";
+  const isAdmin = session?.user?.email === "lindachepcumba8@gmail.com" || session?.user?.email === "example@gmail.com";
   return (
     <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-white shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:block xl:w-[250px]">
       <div className="mx-2 flex h-full flex-col gap-6 xl:mx-4">

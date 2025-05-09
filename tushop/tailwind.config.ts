@@ -1,14 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
 import type { Config } from "tailwindcss";
 import { withUt } from "uploadthing/tw";
 
@@ -32,21 +21,21 @@ export default withUt({
     extend: {
       colors: {
         main: {
-          "50": "#f0f8fe",
-          "100": "#deeefb",
-          "200": "#c5e3f8",
-          "300": "#9cd2f4",
-          "400": "#6eb7ec",
-          "500": "#519ee6",
-          "600": "#3780d9",
-          "700": "#2e6bc7",
-          "800": "#2b57a2",
-          "900": "#284b80",
-          "950": "#1c2f4f",
+          "50": "#e6f9f6",
+          "100": "#c6efea",
+          "200": "#a0e2da",
+          "300": "#73d2c8",
+          "400": "#4dbcb1",
+          "500": "#2aa79b",
+          "600": "#208c81",
+          "700": "#1a7069",
+          "800": "#165a55",
+          "900": "#144b46",
+          "950": "#0c2e2c",
         },
-        desc: "#A6A6A6",
-        "accent-orange": "#D99C64",
-        "accent-green": "#91C459",
+        desc: "#8B949E", // Changed to a softer gray-blue for better contrast
+        "accent-orange": "#F4A261", // Warmer orange for vibrancy
+        "accent-green": "#66BB6A", // Brighter green for balance
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -112,41 +101,3 @@ export default withUt({
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import type { Config } from "tailwindcss";
-
-// const config: Config = {
-//   content: [
-//     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-//   ],
-//   theme: {
-//     extend: {
-//       backgroundImage: {
-//         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-//         "gradient-conic":
-//           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-//       },
-//     },
-//   },
-//   plugins: [],
-// };
-// export default config;
-
-
